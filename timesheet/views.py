@@ -1,9 +1,13 @@
 from django.shortcuts import HttpResponse, render
 from .models import Entry, Type
+from timesheet.forms import EntryForm
 
 
 def home(request):
     return render(request, 'timesheet/home.html')
+
+def new(request):
+    return render(request, 'timesheet/new.html', {'forms': EntryForm})
 
 def get_entries(request):
     entries = Entry.objects.all()
