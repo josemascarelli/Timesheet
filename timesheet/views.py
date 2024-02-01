@@ -1,9 +1,9 @@
 from django.shortcuts import HttpResponse, render
 from .models import Entry, Type
 
+
 def home(request):
     return render(request, 'timesheet/home.html')
-
 
 def get_entries(request):
     entries = Entry.objects.all()
