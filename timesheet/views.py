@@ -1,10 +1,13 @@
 from django.shortcuts import HttpResponse, render
 from .models import Entry, Type
 
+def home(request):
+    return render(request, 'timesheet/home.html')
+
 
 def get_entries(request):
     entries = Entry.objects.all()
-    return HttpResponse(entries)
+    return render(request, 'timesheet/entries.html', {'entries': entries})
 
 def get_entry_by_id(request, id):
     entry = Entry.objects.get(id=id)
