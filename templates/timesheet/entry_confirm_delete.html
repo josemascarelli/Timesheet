@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+
+{% block title %} Confirmar Exclusão {% endblock %}
+
+{% block content %}
+    <div class="row align-items-center">
+        <div class="col-auto h3">
+            Excluir Timesheet
+            </div>
+    </div>
+    <p>Tem certeza que deseja excluir esse timesheet?</p>
+
+    <form method="post">
+        {% csrf_token %} 
+
+        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+        <a href="{% url 'list_view' %}">
+            <button type="button" class="btn btn-primary btn-sm">Cancelar</button>
+        </a>
+    </form>
+
+{% endblock %}

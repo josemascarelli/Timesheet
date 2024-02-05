@@ -1,0 +1,53 @@
+{% extends 'base.html' %} 
+
+{% block title %} Lista de Timesheets {% endblock %}
+
+{% block content %}
+
+<div class="row align-items-center">
+  <div class="col-auto h3">Lista de Timesheets</div>
+  <div class="col">
+    <a
+      type="button"
+      href="{% url 'create_view' %}"
+      class="btn btn-primary btn-sm"
+      >Novo</a
+    >
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Data</th>
+      <th scope="col">Tempo</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in entry_list %}
+    <tr>
+      <td>{{ entry.date|date:'d/m/Y' }}</td>
+      <td>{{ entry.time }}</td>
+      <td>{{ entry.type }}</td>
+      <td>{{ entry.description|truncatewords:5 }}</td>
+      <td>
+        <a
+          type="button"
+          href="{% url 'update_view' entry.pk %}"
+          class="btn btn-primary btn-sm"
+          >Editar</a
+        >
+        <a type="button" href="{% url 'delete_view' entry.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+      </td>
+    </tr>
+    {% empty %}
+      <tr>
+        <td colspan="5">Nenhum registro encontrado</td>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

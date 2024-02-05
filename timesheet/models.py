@@ -2,23 +2,47 @@ from django.db import models
 from datetime import datetime
 from uuid import uuid4 as uuid
 
+
 class Entry(models.Model):
     class Meta:
         verbose_name = 'Entry'
         verbose_name_plural = 'Entries'
         ordering = ['-date']
-    
-    '''A timesheet entry.'''
-    id = models.UUIDField(primary_key=True, default=uuid, editable=False)
-    date_added = models.DateTimeField(default=datetime.now, editable=False ,verbose_name='DATE ADDED')
-    date = models.DateField(verbose_name='DATE', help_text='Date of the entry', default=datetime.now)
-    time = models.IntegerField(verbose_name='TIME', default=10, help_text='Time in minutes')
-    type = models.ForeignKey('Type', on_delete=models.PROTECT, verbose_name='TYPE', help_text='What type of work did you do?')
-    description = models.TextField(verbose_name='DESCRIPTION', help_text='What did you do?')
+
+    id = models.UUIDField(
+        verbose_name='ID',
+        primary_key=True,
+        default=uuid,
+        editable=False,
+    )
+    date_added = models.DateTimeField(
+        verbose_name='DATE ADDED',
+        default=datetime.now,
+        editable=False,
+    )
+    date = models.DateField(
+        verbose_name='DATE',
+        default=datetime.now,
+    )
+    time = models.DurationField(
+        verbose_name='TIME',
+    )
+    type = models.ForeignKey(
+        verbose_name='TYPE',
+        to='Type',
+        on_delete=models.PROTECT,
+    )
+    description = models.TextField(
+        verbose_name='DESCRIPTION',
+    )
 
     def __str__(self):
-        return f'{self.id} - {self.type} - {self.date} - {self.time}'
-    
+        return f'Entry(id={self.id}, \
+                       date_added={self.date_added}, \
+                       date={self.date}, \
+                       time={self.time}, \
+                       type={self.type}, \
+                       description={self.description})'
 
 
 class Type(models.Model):
@@ -27,10 +51,26 @@ class Type(models.Model):
         verbose_name_plural = 'Types'
         ordering = ['name']
 
-    '''A type of timesheet entry.'''
-    id = models.UUIDField(primary_key=True, default=uuid, editable=False)
-    date_added = models.DateTimeField(default=datetime.now, editable=False ,verbose_name='DATE ADDED')
-    name = models.CharField(max_length=100, verbose_name='NAME', help_text='Name of the type')
+    id = models.UUIDField(
+        primary_key=True,
+        verbose_name='ID',
+        default=uuid,
+        editable=False,
+    )
+    date_added = models.DateTimeField(
+        verbose_name='DATE ADDED',
+        default=datetime.now,
+        editable=False,
+    )
+    name = models.CharField(
+        verbose_name='NAME',
+        max_length=100,
+    )
 
     def __str__(self):
         return self.name
+
+    def __repr__(self):
+        return f'Type(id={self.id}, \
+                      date_added={self.date_added}, \
+                      name={self.name})'

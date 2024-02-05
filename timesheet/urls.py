@@ -1,12 +1,9 @@
 from django.urls import path
-from . import views
+from .views import EntryListView, EntryCreateView, EntryUpdateView, EntryDeleteView
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('home/', views.home, name='home'),
-    path('entries/', views.get_entries, name='entries'),
-    path('types/', views.get_types, name='types'),
-    path('entry/<uuid:id>/', views.get_entry_by_id, name='entry'),
-    path('entry/new/', views.new, name='new'),
-    path('type/<uuid:id>/', views.get_type_by_id, name='type'),
-    ]
+    path('', EntryListView.as_view(), name='list_view'),
+    path('create', EntryCreateView.as_view(), name='create_view'),
+    path('update/<uuid:pk>', EntryUpdateView.as_view(), name='update_view'),
+    path('delete/<uuid:pk>', EntryDeleteView.as_view(), name='delete_view'),
+]
